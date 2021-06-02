@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import Lottie from 'lottie-react';
+import { sending } from '../media';
+import { dummydata } from '../utils/data';
 
 export interface Props {}
 
@@ -9,39 +12,23 @@ type Inputs = {
   files: FileList;
 };
 
-const list = [
-  {
-    name: 'this is my first cv',
-    status: 'sent',
-  },
-  {
-    name: 'this is second cv',
-    status: 'sent',
-  },
-  {
-    name: 'my first cv',
-    status: 'sent',
-  },
-  {
-    name: 'this is my cv',
-    status: 'sent',
-  },
-  {
-    name: 'my last cv',
-    status: 'sent',
-  },
-];
-
 const User = () => {
-  const [cards, setCards] = useState(list);
+  const [cards, setCards] = useState(dummydata);
   const { register, watch } = useForm<Inputs>();
+  const [loader, setLoader] = useState(false);
 
   watch(({ files }) => {
     if (files.length === 0) return;
 
-    const name = files[0].name;
-    const fileExist = cards.some((card) => card.name === name);
-    if (!fileExist) setCards([{ name, status: 'sent' }, ...cards]);
+    setLoader(true);
+
+    setTimeout(() => {
+      setLoader(false);
+
+      const name = files[0].name;
+      const fileExist = cards.some((card) => card.name === name);
+      if (!fileExist) setCards([{ name, status: 'sent' }, ...cards]);
+    }, 4100);
   });
 
   const removeCard = (name: string) => {
@@ -53,26 +40,33 @@ const User = () => {
     <Div>
       <nav className='user-nav'>
         <ul className='user-nav-ul'>
-          <li className='user-nav-li'>
+          <li className='user-nav-li' data-aos='fade-left'>
             <Link className='user-nav-link' to='/'>
               Logout
             </Link>
           </li>
         </ul>
       </nav>
+
       <div className='user-cv-container'>
-        <h2>My CVs</h2>
-        <div
-          className='user-cv-card-container'
-          id='user-cv-cards'
-          data-aos='flip-down'
-        >
+        {loader && (
+          <Lottie
+            className='user-loader'
+            animationData={sending}
+            loop={false}
+          />
+        )}
+
+        <div className='user-title-container'>
+          <h2>My CVs</h2>
+        </div>
+        <div className='user-cv-card-container' id='user-cv-cards'>
           {cards.map(({ name, status }, ind) => (
             <div
               className='user-cv-card'
               key={ind}
               data-aos='zoom-in'
-              data-aos-delay={ind * 100}
+              data-aos-delay={(cards.length - ind) * 100}
             >
               <h5 className='user-cv-card-title'>{name}</h5>
 
@@ -136,22 +130,30 @@ const Div = styled.div`
   }
 
   .user-cv-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-top: 2rem;
-    width: max(64%, 300px);
-    height: 500px;
+    width: max(64%, 430px);
+    min-height: 300px;
+    max-height: 520px;
+    border: 2px solid #c7c0c0;
     background: #0a9396;
     border-radius: 15px;
     border-bottom: 6px solid gray;
   }
 
   .user-cv-card-container {
+    flex-grow: 1;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    height: 80%;
     margin: 8px;
     background-color: white;
+    min-width: 97%;
     padding: 5px;
     overflow: auto;
   }
@@ -166,6 +168,11 @@ const Div = styled.div`
     background: #94d2bd;
     padding: 8px;
   }
+  .user-loader {
+    position: absolute;
+    width: 300px;
+    z-index: 111;
+  }
   .user-cv-card-title {
     text-transform: uppercase;
     overflow: hidden;
@@ -179,6 +186,13 @@ const Div = styled.div`
   .user-cv-buttons {
     display: flex;
     justify-content: center;
+    margin: 8px;
+  }
+
+  @media screen and (max-width: 700px) {
+    .user-cv-container {
+      max-height: 800px;
+    }
   }
 `;
 
