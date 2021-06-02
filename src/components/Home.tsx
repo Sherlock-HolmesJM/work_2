@@ -1,10 +1,22 @@
 import styled from 'styled-components';
 import { heroImg } from '../media';
 import { FcNfcSign } from 'react-icons/fc';
+import { useForm } from 'react-hook-form';
 
 export interface HomeProps {}
 
-const Home: React.FC<HomeProps> = () => {
+type Inputs = {
+  email: string;
+  password: string;
+};
+
+const Home = () => {
+  const { register, handleSubmit } = useForm<Inputs>();
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
   return (
     <Div>
       <div className='home-hero-div'>
@@ -14,7 +26,7 @@ const Home: React.FC<HomeProps> = () => {
 
       <div className='home-content-div'>
         <div className='home-form-div'>
-          <form className='home-form'>
+          <form className='home-form' onSubmit={onSubmit}>
             <FcNfcSign className='home-form-icon' />
             <h1 className='h3 mb-3 fw-normal' style={{ color: 'white' }}>
               Please sign in
@@ -26,6 +38,7 @@ const Home: React.FC<HomeProps> = () => {
                 id='email'
                 className='form-control'
                 placeholder='name@example.com'
+                {...register('email', { required: true })}
               />
               <label htmlFor='email'>Email address</label>
             </div>
@@ -36,6 +49,7 @@ const Home: React.FC<HomeProps> = () => {
                 id='password'
                 className='form-control'
                 placeholder='Password'
+                {...register('password', { required: true, minLength: 3 })}
               />
               <label htmlFor='password'>Password</label>
             </div>
