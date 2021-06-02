@@ -2,19 +2,20 @@ import styled from 'styled-components';
 import { heroImg } from '../media';
 import { FcNfcSign } from 'react-icons/fc';
 import { useForm } from 'react-hook-form';
+import { withRouter, RouterProps } from 'react-router-dom';
 
-export interface HomeProps {}
+export interface HomeProps extends RouterProps {}
 
 type Inputs = {
   email: string;
   password: string;
 };
 
-const Home = () => {
+const Home = (props: HomeProps) => {
   const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    props.history.replace('/user');
   });
 
   return (
@@ -65,14 +66,6 @@ const Home = () => {
 };
 
 const Div = styled.div`
-  background: linear-gradient(
-    148deg,
-    hsla(190, 77%, 88%, 1) 8%,
-    hsla(239, 94%, 19%, 1) 41%,
-    hsla(190, 100%, 42%, 1) 95%
-  );
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#CAF0F8", endColorstr="#90E0EF", GradientType=1 );
-
   display: flex;
   flex-wrap: wrap;
   min-height: 100vh;
@@ -113,4 +106,4 @@ const Div = styled.div`
   }
 `;
 
-export default Home;
+export default withRouter(Home);
