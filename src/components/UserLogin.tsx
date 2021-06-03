@@ -21,13 +21,32 @@ const Home = (props: HomeProps) => {
   return (
     <Div>
       <div className='home-hero-div'>
-        <h2>Ready to submit your CV?</h2>
-        <img src={heroImg} alt='hero img' className='home-hero-img' />
+        <h2
+          data-aos='fade-right'
+          data-aos-duration={1500}
+          data-aos-delay={1000}
+        >
+          Ready to submit your CV?
+        </h2>
+        <img
+          src={heroImg}
+          alt='hero img'
+          className='home-hero-img'
+          data-aos='fade-left'
+          data-aos-duration={2000}
+          data-aos-delay={1300}
+        />
       </div>
 
       <div className='home-content-div'>
         <div className='home-form-div'>
-          <form className='home-form' onSubmit={onSubmit}>
+          <form
+            className='home-form'
+            onSubmit={onSubmit}
+            data-aos='fade'
+            data-aos-delay={500}
+            data-aos-duration={1500}
+          >
             <FcNfcSign className='home-form-icon' />
             <h1 className='h3 mb-3 fw-normal' style={{ color: 'white' }}>
               Please sign in

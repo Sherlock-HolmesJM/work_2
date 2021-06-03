@@ -2,38 +2,41 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import Lottie from 'lottie-react';
-import { sending } from '../media';
-import { dummydata } from '../utils/data';
-
-export interface Props {}
+import { dummydata, getID } from '../utils/data';
+import UserCard from './common/UserCard';
+import Loader from './common/Loader';
 
 type Inputs = {
   files: FileList;
 };
 
-const User = () => {
-  const [cards, setCards] = useState(dummydata);
+function User() {
   const { register, watch } = useForm<Inputs>();
-  const [loader, setLoader] = useState(false);
+  const [state, setState] = useState({ cards: dummydata, loader: false });
+  const { cards, loader } = state;
 
   watch(({ files }) => {
     if (files.length === 0) return;
 
-    setLoader(true);
+    const name = files[0].name.toLowerCase();
+    const fileExist = cards.some((card) => card.name === name);
+
+    if (fileExist) return;
+
+    setState({ ...state, loader: true });
 
     setTimeout(() => {
-      setLoader(false);
-
-      const name = files[0].name;
-      const fileExist = cards.some((card) => card.name === name);
-      if (!fileExist) setCards([{ name, status: 'sent' }, ...cards]);
+      const id = getID();
+      setState({
+        cards: [{ id, name, status: 'sent' }, ...cards],
+        loader: false,
+      });
     }, 4100);
   });
 
   const removeCard = (name: string) => {
     const list = cards.filter((card) => card.name !== name);
-    setCards(list);
+    setState({ ...state, cards: list });
   };
 
   return (
@@ -49,41 +52,19 @@ const User = () => {
       </nav>
 
       <div className='user-cv-container'>
-        {loader && (
-          <Lottie
-            className='user-loader'
-            animationData={sending}
-            loop={false}
-          />
-        )}
+        {loader && <Loader />}
 
         <div className='user-title-container'>
           <h2>My CVs</h2>
         </div>
         <div className='user-cv-card-container' id='user-cv-cards'>
-          {cards.map(({ name, status }, ind) => (
-            <div
-              className='user-cv-card'
-              key={ind}
-              data-aos='zoom-in'
-              data-aos-delay={(cards.length - ind) * 100}
-            >
-              <h5 className='user-cv-card-title'>{name}</h5>
-
-              <span>{status}</span>
-
-              <div className='user-cv-card-buttons btn-group'>
-                <button className='user-cv-card-button btn btn-primary'>
-                  Update
-                </button>
-                <button
-                  className='user-cv-card-button btn btn-danger'
-                  onClick={() => removeCard(name)}
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
+          {cards.map((card, ind) => (
+            <UserCard
+              data={card}
+              index={ind}
+              length={cards.length}
+              onRemove={removeCard}
+            />
           ))}
         </div>
         <div className='user-cv-buttons'>
@@ -98,7 +79,7 @@ const User = () => {
       </div>
     </Div>
   );
-};
+}
 
 const Div = styled.div`
   min-height: 100vh;
@@ -130,15 +111,15 @@ const Div = styled.div`
   }
 
   .user-cv-container {
+    width: max(calc(calc(500 - 100%) * 999), 64%);
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 2rem;
-    width: max(64%, 430px);
-    min-height: 300px;
-    max-height: 520px;
+    height: 520px;
+    width: min(880px, 90%);
     border: 2px solid #c7c0c0;
     background: #0a9396;
     border-radius: 15px;
@@ -146,40 +127,18 @@ const Div = styled.div`
   }
 
   .user-cv-card-container {
-    flex-grow: 1;
+    width: 98%;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+    align-content: flex-start;
     gap: 10px;
-    margin: 8px;
-    background-color: white;
-    min-width: 97%;
+    background-color: #94d2bd;
     padding: 5px;
     overflow: auto;
   }
-  .user-cv-card {
-    flex-basis: calc(calc(600px - 100%) * 999);
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    border-radius: 7px;
-    background: #94d2bd;
-    padding: 8px;
-  }
-  .user-loader {
-    position: absolute;
-    width: 300px;
-    z-index: 111;
-  }
-  .user-cv-card-title {
-    text-transform: uppercase;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 250px;
-  }
+
   .user-cv-add {
     width: 80%;
   }
@@ -191,7 +150,7 @@ const Div = styled.div`
 
   @media screen and (max-width: 700px) {
     .user-cv-container {
-      max-height: 800px;
+      height: 700px;
     }
   }
 `;
