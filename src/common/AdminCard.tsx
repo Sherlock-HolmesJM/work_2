@@ -1,24 +1,19 @@
 import styled from 'styled-components';
+import { UserCardI } from './UserCard';
 
-interface UserCardI {
-  id: number;
-  status: string;
-  name: string;
-}
-
-export interface UserCardProps {
+export interface Props {
   data: UserCardI;
   length: number;
   index: number;
-  onRemove: (name: string) => void;
+  onConfirm: (data: UserCardI) => void;
 }
 
-const UserCard: React.FC<UserCardProps> = (props) => {
-  const { id, name, status } = props.data;
-  const { length, index, onRemove } = props;
+const AdminCard: React.FC<Props> = (props) => {
+  const { length, index, onConfirm, data } = props;
+  const { name, status } = data;
 
   return (
-    <Div key={id} data-aos='zoom-in' data-aos-delay={(length - index) * 100}>
+    <Div data-aos='zoom-in' data-aos-delay={(length - index) * 100}>
       <h5 className='card-title'>{name}</h5>
 
       <span className='card-status'>
@@ -26,12 +21,12 @@ const UserCard: React.FC<UserCardProps> = (props) => {
       </span>
 
       <div className='card-buttons btn-group'>
-        <button className='card-button btn btn-primary'>Update</button>
+        <button className='card-button btn btn-primary'>View</button>
         <button
-          className='card-button btn btn-danger'
-          onClick={() => onRemove(name)}
+          className='card-button btn btn-warning'
+          onClick={() => onConfirm(data)}
         >
-          Remove
+          {status === 'confirmed' ? 'Unconfirm' : 'Confirm'}
         </button>
       </div>
     </Div>
@@ -62,4 +57,4 @@ const Div = styled.div`
   }
 `;
 
-export default UserCard;
+export default AdminCard;

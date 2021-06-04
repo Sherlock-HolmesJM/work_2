@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { dummydata, getID } from '../utils/data';
-import UserCard from './common/UserCard';
-import Loader from './common/Loader';
+import UserCard from '../common/UserCard';
+import Loader from '../common/Loader';
+import EmptyDiv from '../common/EmptyDiv';
+import CardContainer from '../common/CardContainer';
+import CVContainer from '../common/CVContainer';
 
 type Inputs = {
   files: FileList;
@@ -51,22 +54,28 @@ function User() {
         </ul>
       </nav>
 
-      <div className='user-cv-container'>
+      <CVContainer>
         {loader && <Loader />}
 
         <div className='user-title-container'>
           <h2>My CVs</h2>
         </div>
-        <div className='user-cv-card-container' id='user-cv-cards'>
+        <CardContainer>
+          {cards.length === 0 && (
+            <EmptyDiv>
+              <div>NO CV TO SHOW</div>
+            </EmptyDiv>
+          )}
           {cards.map((card, ind) => (
             <UserCard
+              key={card.id}
               data={card}
               index={ind}
               length={cards.length}
               onRemove={removeCard}
             />
           ))}
-        </div>
+        </CardContainer>
         <div className='user-cv-buttons'>
           <form>
             <input
@@ -76,7 +85,7 @@ function User() {
             />
           </form>
         </div>
-      </div>
+      </CVContainer>
     </Div>
   );
 }
@@ -110,35 +119,6 @@ const Div = styled.div`
     text-decoration: none;
   }
 
-  .user-cv-container {
-    width: max(calc(calc(500 - 100%) * 999), 64%);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
-    height: 520px;
-    width: min(880px, 90%);
-    border: 2px solid #c7c0c0;
-    background: #0a9396;
-    border-radius: 15px;
-    border-bottom: 6px solid gray;
-  }
-
-  .user-cv-card-container {
-    width: 98%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-    gap: 10px;
-    background-color: #94d2bd;
-    padding: 5px;
-    overflow: auto;
-  }
-
   .user-cv-add {
     width: 80%;
   }
@@ -146,12 +126,6 @@ const Div = styled.div`
     display: flex;
     justify-content: center;
     margin: 8px;
-  }
-
-  @media screen and (max-width: 700px) {
-    .user-cv-container {
-      height: 700px;
-    }
   }
 `;
 

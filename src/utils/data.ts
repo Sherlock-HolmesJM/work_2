@@ -13,7 +13,7 @@ export const dummydata = [
   },
   {
     name: 'my first cv',
-    status: 'sent',
+    status: 'confirmed',
     id: getID(),
   },
 ];

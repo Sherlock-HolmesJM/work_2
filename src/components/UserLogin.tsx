@@ -9,13 +9,15 @@ export interface HomeProps extends RouterProps {}
 type Inputs = {
   email: string;
   password: string;
+  checkbox: string;
 };
 
 const Home = (props: HomeProps) => {
   const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit = handleSubmit((data) => {
-    props.history.replace('/user');
+    if (data.checkbox) props.history.replace('/admin');
+    else props.history.replace('/user');
   });
 
   return (
@@ -26,7 +28,7 @@ const Home = (props: HomeProps) => {
           data-aos-duration={1500}
           data-aos-delay={1000}
         >
-          Ready to submit your CV?
+          Ready to manage CVs?
         </h2>
         <img
           src={heroImg}
@@ -72,6 +74,12 @@ const Home = (props: HomeProps) => {
                 {...register('password', { required: true, minLength: 3 })}
               />
               <label htmlFor='password'>Password</label>
+            </div>
+
+            <div className='checkbox mb-3'>
+              <label htmlFor='hod' style={{ color: 'white' }}>
+                <input type='checkbox' {...register('checkbox')} id='hod' /> HOD
+              </label>
             </div>
 
             <button className='m-4 w-100 btn btn-lg btn-primary' type='submit'>
