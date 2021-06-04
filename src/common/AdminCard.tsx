@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { UserCardI } from './UserCard';
+import { Card } from './Card';
 
 export interface Props {
   data: UserCardI;
@@ -33,28 +34,9 @@ const AdminCard: React.FC<Props> = (props) => {
   );
 };
 
-const Div = styled.div`
-  flex-basis: calc(calc(600px - 100%) * 999);
-  height: 130px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  border-radius: 7px;
-  background: #005f73;
-  color: white;
-  padding: 8px;
-
-  .card-title {
-    text-transform: uppercase;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 250px;
-  }
-  .card-status {
-    text-transform: capitalize;
-  }
+const Div = styled(Card)`
+  background: #a8dadc;
+  color: black;
 `;
 
 export default AdminCard;

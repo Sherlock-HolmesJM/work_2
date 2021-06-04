@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { dummydata, getID } from '../utils/data';
@@ -8,6 +7,7 @@ import Loader from '../common/Loader';
 import EmptyDiv from '../common/EmptyDiv';
 import CardContainer from '../common/CardContainer';
 import CVContainer from '../common/CVContainer';
+import NavBar from '../common/NavBar';
 
 type Inputs = {
   files: FileList;
@@ -44,20 +44,12 @@ function User() {
 
   return (
     <Div>
-      <nav className='user-nav'>
-        <ul className='user-nav-ul'>
-          <li className='user-nav-li' data-aos='fade-left'>
-            <Link className='user-nav-link' to='/'>
-              Logout
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <NavBar />
 
       <CVContainer>
         {loader && <Loader />}
 
-        <div className='user-title-container'>
+        <div style={{ color: 'white' }}>
           <h2>My CVs</h2>
         </div>
         <CardContainer>
@@ -96,28 +88,6 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .user-nav {
-    display: flex;
-    align-items: center;
-    background-color: #023e8a;
-    width: 100%;
-  }
-  .user-nav-ul {
-    display: flex;
-    list-style-type: none;
-    align-items: center;
-    transform: translateY(25%) translateX(30%);
-  }
-  .user-nav-li {
-    background: white;
-    padding: 3px 6px;
-    border-radius: 6px;
-  }
-  .user-nav-link {
-    color: red;
-    text-decoration: none;
-  }
 
   .user-cv-add {
     width: 80%;

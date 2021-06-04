@@ -2,17 +2,17 @@ export const getID = () => Math.floor(Math.random() * 170000);
 
 export const dummydata = [
   {
-    name: 'this is my first cv',
+    name: "ekemini's cv.pdf",
     status: 'sent',
     id: getID(),
   },
   {
-    name: 'this is second cv',
+    name: 'ekemini cv.pdf',
     status: 'sent',
     id: getID(),
   },
   {
-    name: 'my first cv',
+    name: 'ekemini cv.docx',
     status: 'confirmed',
     id: getID(),
   },

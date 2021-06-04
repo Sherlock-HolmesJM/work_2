@@ -60,7 +60,7 @@ const Home = (props: HomeProps) => {
                 id='email'
                 className='form-control'
                 placeholder='name@example.com'
-                {...register('email', { required: true })}
+                {...register('email')}
               />
               <label htmlFor='email'>Email address</label>
             </div>
@@ -71,7 +71,7 @@ const Home = (props: HomeProps) => {
                 id='password'
                 className='form-control'
                 placeholder='Password'
-                {...register('password', { required: true, minLength: 3 })}
+                {...register('password')}
               />
               <label htmlFor='password'>Password</label>
             </div>
