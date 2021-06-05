@@ -5,7 +5,7 @@ import ChildContainer from '../common/ChildContainer';
 
 export interface RatingProps {}
 
-const Rating: React.SFC<RatingProps> = () => {
+const Rating: React.FC<RatingProps> = () => {
   const items = [
     'Punctuality',
     'Attendance in class',
@@ -24,46 +24,48 @@ const Rating: React.SFC<RatingProps> = () => {
       <Div>
         <Header>Report for 17/ED/VE/9999</Header>
         <ChildContainer>
-          <table className='table'>
-            <thead>
-              <tr>
-                <th scope='col'>ITEM</th>
-                <th scope='col'>EXCELLECT</th>
-                <th scope='col'>SATISFACTORY</th>
-                <th scope='col'>POOR</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item, index) => (
+          <div className='table-container'>
+            <table className='table'>
+              <thead>
                 <tr>
-                  <td key={index}>
-                    {++index}. {item}
-                  </td>
-                  <td>
-                    <input
-                      type='radio'
-                      name={`check${index}`}
-                      className='form-check-input'
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type='radio'
-                      name={`check${index}`}
-                      className='form-check-input'
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type='radio'
-                      name={`check${index}`}
-                      className='form-check-input'
-                    />
-                  </td>
+                  <th scope='col'>ITEM</th>
+                  <th scope='col'>EXCELLECT</th>
+                  <th scope='col'>SATISFACTORY</th>
+                  <th scope='col'>POOR</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {items.map((item, index) => (
+                  <tr key={index}>
+                    <td key={index}>
+                      {++index}. {item}
+                    </td>
+                    <td>
+                      <input
+                        type='radio'
+                        name={`check${index}`}
+                        className='form-check-input'
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type='radio'
+                        name={`check${index}`}
+                        className='form-check-input'
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type='radio'
+                        name={`check${index}`}
+                        className='form-check-input'
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <button className='btn btn-primary btn-sm'>Submit rating</button>
         </ChildContainer>
       </Div>
@@ -73,6 +75,11 @@ const Rating: React.SFC<RatingProps> = () => {
 
 const Div = styled.div`
   flex-grow: 1;
+
+  .table-container {
+    min-width: 480px;
+    overflow: auto;
+  }
 `;
 
 export default Rating;

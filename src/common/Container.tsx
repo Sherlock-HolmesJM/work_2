@@ -11,11 +11,13 @@ const Container: React.FC<ContProps> = (props) => {
         <Link to='/' className='btn btn-danger btn-sm'>
           Logout
         </Link>
-        <em>Web-Based Teaching Practice Management System</em>
+        <em className='title-hide'>
+          Web-Based Teaching Practice Management System
+        </em>
       </div>
       <div className='content'>
         <SideNav />
-        {props.children}
+        <div>{props.children}</div>
       </div>
     </Div>
   );
@@ -33,14 +35,26 @@ const Div = styled.div`
     background: black;
     color: white;
     height: 40px;
-    padding: 5px 80px;
+    padding: 5px 4.2%;
     margin-bottom: 15px;
   }
   .content {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    padding: 10px 80px;
+    padding: 10px 4%;
+    flex-wrap: wrap;
+  }
+
+  .content > * {
+    flex-grow: 1;
+    flex-basis: calc(calc(500px - 100%) * 999);
+  }
+
+  @media screen and (max-width: 700px) {
+    .title-hide {
+      display: none;
+    }
   }
 `;
 

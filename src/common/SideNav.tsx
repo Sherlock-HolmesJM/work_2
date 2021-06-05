@@ -34,6 +34,8 @@ const SideNav: React.FC<SideNavProps> = () => {
 };
 
 const Div = styled.div`
+  max-width: max(300px, 15vw);
+
   ul {
     list-style-type: none;
     margin-top: 0;
