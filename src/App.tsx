@@ -1,24 +1,22 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'aos/dist/aos.css';
-import UserLogin from './components/UserLogin';
-import User from './components/User';
-import Admin from './components/Admin';
+// import 'aos/dist/aos.css';
+// import AOS from 'aos';
 import { Switch, Route } from 'react-router-dom';
-import AOS from 'aos';
+import Profile from './components/Profile';
 
 function App() {
-  AOS.init({
-    duration: 1000,
-    once: true,
-  });
+  // AOS.init({
+  //   duration: 1000,
+  //   once: true,
+  // });
 
   return (
     <div className='App'>
       <Switch>
-        <Route exact path='/' component={UserLogin} />
-        <Route exact path='/user' component={User} />
-        <Route exact path='/admin' component={Admin} />
+        {/* <Route exact path='/' component={UserLogin} /> */}
+        <Route exact path='/profile' component={Profile} />
+        {/* <Route exact path='/admin' component={Admin} /> */}
       </Switch>
     </div>
   );
