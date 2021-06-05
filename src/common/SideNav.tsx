@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 import Header from './Header';
+import { Link } from 'react-router-dom';
 
 export interface SideNavProps {}
 
 const SideNav: React.FC<SideNavProps> = () => {
   const items = [
     ['#', '', 'View Activity'],
-    ['#', '', 'Fill Activity'],
+    ['/fill_activity', '', 'Fill Activity'],
     ['#', '', 'Report Sheet'],
-    ['#', '', "Principal's Rating"],
-    ['#', '', 'My Profile'],
+    ['/principal_rating', '', "Principal's Rating"],
+    ['/profile', '', 'My Profile'],
     ['#', '', 'Supervisor/Coordinator'],
     ['#', '', 'Notice Board'],
     ['#', '', 'Messages'],
@@ -21,10 +22,10 @@ const SideNav: React.FC<SideNavProps> = () => {
       <ul className='list-group'>
         {items.map(([link, , title]) => (
           <li key={title} className='list-group-item list-group-item-action'>
-            <a href={link} className='ul-link'>
+            <Link to={link} className='ul-link'>
               <div></div>
               <div>{title}</div>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

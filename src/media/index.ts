@@ -1,4 +1,4 @@
-import heroImg from './hero-img.svg';
+import heroImg from './hero.svg';
 import sending from './sending.json';
 import confirmed from './confirmed.json';
 
