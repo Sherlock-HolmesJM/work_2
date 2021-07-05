@@ -5,10 +5,12 @@ export interface ControlProps {
   placeholder?: string;
   label: string;
   id: string;
+  value?: string;
+  onChange?: (e: any) => void;
 }
 
-const Control: React.SFC<ControlProps> = (props) => {
-  const { type, label, placeholder, id } = props;
+const Control: React.FC<ControlProps> = (props) => {
+  const { type, label, placeholder, id, value, onChange } = props;
 
   return (
     <Div className='mb-3'>
@@ -20,6 +22,8 @@ const Control: React.SFC<ControlProps> = (props) => {
         className='form-control'
         id={id}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
       />
     </Div>
   );
@@ -54,13 +58,13 @@ interface TextAreaProps {
 }
 
 const TextArea = (props: TextAreaProps) => {
-  const { label } = props;
+  const { label, id } = props;
   return (
     <TA>
       <label htmlFor={''} className='form-label'>
         {label}
       </label>
-      <textarea rows={4} className='form-control'></textarea>
+      <textarea id={id} rows={4} className='form-control'></textarea>
     </TA>
   );
 };
